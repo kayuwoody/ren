@@ -1,10 +1,13 @@
 // next.config.js
 const path = require('path');
-module.exports = {
-  // Don’t try to fetch SWC binaries
-  swcMinify: false,
-  // Force Next to use the Babel loader instead of SWC
-  experimental: {
-    swcLoader: false,
+
+const nextConfig = {
+  reactStrictMode: true,
+  // By default Next.js uses SWC for both compilation and minification,
+  // so you don't need to explicitly set swcMinify unless you want to disable it.
+  // swcMinify: true,  // <-- optional, defaults to true
+};
+
+module.exports = nextConfig; 
   },
 };
