@@ -1,0 +1,7 @@
+{
+  "name": "Coffee POS Dev",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18-bullseye",
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm install",
+  "remoteUser": "node"
+}
