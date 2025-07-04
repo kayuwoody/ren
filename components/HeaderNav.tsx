@@ -1,9 +1,9 @@
 // 10. components/HeaderNav.tsx 
-'use client';
-
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
-import { useCart } from '@/context/cartContext';
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useCart } from "@/context/cartContext";
+import { Clock } from "lucide-react";
 
 export default function HeaderNav() {
   const { cartItems } = useCart();
@@ -11,27 +11,27 @@ export default function HeaderNav() {
   const [currentOrderId, setCurrentOrderId] = useState<string | null>(null);
 
   useEffect(() => {
-    const id = localStorage.getItem('currentOrderId');
+    const id = localStorage.getItem("currentWooId");
     setCurrentOrderId(id);
-
-    const clientId = localStorage.getItem('clientId') || '';
+    const clientId = localStorage.getItem("clientId") || "";
     fetch(`/api/orders/processing?clientId=${clientId}`)
       .then((r) => r.json())
-      .then((o) => setHasProcessing(!!o?.id))
-      .catch(() => setHasProcessing(false));
+      .then((o) => setHasProcessing(!!o?.id));
   }, []);
 
   return (
-    <header className="w-full bg-white border-b shadow-sm px-4 py-3 flex items-center justify-between sticky top-0 z-50">
-      <nav className="flex items-center space-x-6">
+    <header className="...">
+      <nav className="flex space-x-4">
         <Link href="/">Home</Link>
         <Link href="/products">Products</Link>
-        <Link href="/orders">Orders</Link>
+        <Link href="/orders">All Orders</Link>
         {cartItems.length > 0 && (
           <Link href="/cart">Cart ({cartItems.length})</Link>
         )}
         {hasProcessing && currentOrderId && (
-          <Link href={`/orders/${currentOrderId}`}>⏳</Link>
+          <Link href={`/orders/${currentOrderId}`}>
+            <Clock className="w-6 h-6" />
+          </Link>
         )}
       </nav>
     </header>

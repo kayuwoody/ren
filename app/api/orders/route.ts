@@ -1,8 +1,11 @@
 // 5. app/api/orders/route.ts 
-export const runtime = 'nodejs'; 
-import { NextResponse } from 'next/server'; 
-import { listWooOrders } from '@/lib/orderService';
+import { NextResponse } from "next/server";
+import { findProcessingOrder } from "@/lib/orderService";
 
-export async function GET() { try { const orders = await listWooOrders(); 
-        return NextResponse.json(orders); } catch (err: any) { console.error('Error listing Woo orders:', err); 
-        return NextResponse.json({ error: err.message }, { status: 500 }); } }
+export async function GET(req: Request) {
+  const { searchParams } = new URL(req.url);
+  const clientId = searchParams.get("clientId");
+  if (!clientId) return NextResponse.json(null);
+  const order = await findProcessingOrder(clientId);
+  return NextResponse.json(order);
+}
